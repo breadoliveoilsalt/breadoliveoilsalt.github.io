@@ -16,11 +16,12 @@
 title: Bread / Olive Oil / Salt
 # email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
-  A blog with thoughts about coding, cooking, and perhaps other stuff.
+  Thoughts about coding, cooking, and perhaps other things.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 github_username:  breadoliveoilsalt
+linkedin_username: tony-distinti
 
 # Build settings
 markdown: kramdown
