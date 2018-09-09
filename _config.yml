@@ -16,7 +16,7 @@
 title: Bread / Olive Oil / Salt
 # email: your-email@example.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Thoughts about coding, cooking, and maybe other things.
+  Thoughts about coding, cooking, and maybe some other things.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
@@ -32,6 +32,12 @@ plugins:
   - jekyll-feed
 
 safe: true
+
+header_pages:
+  - about.md
+  - portfolio.md
+  - coding.md
+  - cooking.md
 
 #
 # Exclude from processing.
