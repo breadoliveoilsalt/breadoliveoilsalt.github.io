@@ -39,6 +39,7 @@ header_pages:
   - coding.md
   - cooking.md
 
+exclude: [scraps]
 #
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
