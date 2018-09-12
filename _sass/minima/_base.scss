@@ -59,7 +59,11 @@ img {
   vertical-align: middle;
 }
 
-
+.centered-img {
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
 
 /**
  * Figures
