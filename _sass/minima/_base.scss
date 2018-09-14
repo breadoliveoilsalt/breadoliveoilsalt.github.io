@@ -54,15 +54,34 @@ main {
 /**
  * Images
  */
+
+ /* Ideal is to have largest image be 720px wide. Space is 740px wide.
+    With the large/medium/small classes below, I can keep images at 740px */
 img {
   max-width: 100%;
   vertical-align: middle;
 }
 
-.centered-img {
-  display:block;
-  margin-left:auto;
-  margin-right:auto;
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.border {
+  border: .25em solid black;
+}
+
+.large {
+  max-width: 97%; /* that is, 720px/740px of available space */
+}
+
+.medium {
+  max-width: 50%;
+}
+
+.small {
+  max-width: 33.33%;
 }
 
 /**
