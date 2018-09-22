@@ -50,6 +50,13 @@ main {
 }
 
 
+/**
+ * Text
+ */
+
+.text-centered {
+  text-align: center;
+}
 
 /**
  * Images
@@ -62,25 +69,25 @@ img {
   vertical-align: middle;
 }
 
-.centered {
+img.centered {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-.border {
+img.border {
   border: .25em solid black;
 }
 
-.large {
+img.large {
   max-width: 97%; /* that is, 720px/740px of available space */
 }
 
-.medium {
+img.medium {
   max-width: 55%; /* 55%, 65% */
 }
 
-.small {
+img.small {
   max-width: 33.33%;
 }
 
