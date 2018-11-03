@@ -35,7 +35,7 @@ safe: true
 
 header_pages:
   - about.md
-  - portfolio.md
+  - projects.md
   - coding.md
   - cooking.md
 
