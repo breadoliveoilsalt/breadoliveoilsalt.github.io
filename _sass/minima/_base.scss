@@ -101,6 +101,17 @@ img.small {
 }
 
 /**
+ * Projects
+ */
+
+.project {
+  .bordered {
+    border: .25em solid grey;
+  }
+}
+
+
+/**
  * Figures
  */
 figure > img {
