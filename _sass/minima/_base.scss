@@ -104,7 +104,7 @@ img.small {
  * Projects
  */
 
-.project {
+.project-wrapper{
   max-width: 80%;
   margin-right: auto;
   margin-left: auto;
@@ -116,7 +116,7 @@ img.small {
   /* adapted from footer-col css */
 .project-col-wrapper {
   @include relative-font-size(0.9375);
-  color: $grey-color;
+  // color: $grey-color;
   margin-left: -$spacing-unit / 2;
   @extend %clearfix;
 }
@@ -133,14 +133,14 @@ img.small {
 }
 
 .project-col-2 {
-  width: -webkit-calc(33.33% - (#{$spacing-unit} / 2));
-  width:         calc(33.33% - (#{$spacing-unit} / 2));
+  width: -webkit-calc(66.67% - (#{$spacing-unit} / 2));
+  width:         calc(66.67% - (#{$spacing-unit} / 2));
 }
-
-.project-col-3 {
-  width: -webkit-calc(33.33% - (#{$spacing-unit} / 2));
-  width:         calc(33.33% - (#{$spacing-unit} / 2));
-}
+//
+// .project-col-3 {
+//   width: -webkit-calc(33.33% - (#{$spacing-unit} / 2));
+//   width:         calc(33.33% - (#{$spacing-unit} / 2));
+// }
 
 @include media-query($on-laptop) {
   .project-col-1,
