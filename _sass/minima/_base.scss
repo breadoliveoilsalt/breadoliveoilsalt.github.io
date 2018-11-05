@@ -122,6 +122,27 @@ img.small {
   margin: auto;
 }
 
+.project-links-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+// .project-link {
+//   display: inline;
+// }
+
+.project-link {
+  float: left;
+}
+
+.project-link a {
+    display: block;
+    text-align: center;
+    // padding: 14px 16px;
+    text-decoration: none;
+}
 //   /* adapted from footer-col css - later, decided to omit to make thumbnail more visible */
 // .project-col-wrapper {
 //   @include relative-font-size(0.9375);
