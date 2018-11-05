@@ -122,10 +122,10 @@ img.small {
   margin: auto;
 }
 
-.project-links-list {
+ul.project-links-list {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
+  text-align: center;
+  margin: auto;
   overflow: hidden;
 }
 
@@ -133,12 +133,14 @@ img.small {
 //   display: inline;
 // }
 
-.project-link {
-  float: left;
+li.project-link {
+  display: inline;
+  padding: 1em;
+  // float: none;
 }
 
-.project-link a {
-    display: block;
+li.project-link a {
+    display: inline-block;
     text-align: center;
     // padding: 14px 16px;
     text-decoration: none;
