@@ -117,14 +117,14 @@ img.small {
 .project-col-wrapper {
   @include relative-font-size(0.9375);
   // color: $grey-color;
-  margin-left: -$spacing-unit / 2;
+  // margin-left: -$spacing-unit / 2;
   @extend %clearfix;
 }
 
 .project-col {
   float: left;
-  margin-bottom: $spacing-unit / 2;
-  padding-left: $spacing-unit / 2;
+  // margin-bottom: $spacing-unit / 2;
+  // padding-left: $spacing-unit / 2;
 }
 
 .project-col-1 {
