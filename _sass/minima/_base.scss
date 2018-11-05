@@ -88,6 +88,10 @@ img.border {
   border: .25em solid black;
 }
 
+img.thin-border {
+  border: .15em solid black;
+}
+
 img.large {
   max-width: 97%; /* that is, 720px/740px of available space */
 }
@@ -113,63 +117,68 @@ img.small {
   }
 }
 
-  /* adapted from footer-col css */
-.project-col-wrapper {
-  @include relative-font-size(0.9375);
-  // color: $grey-color;
-  // margin-left: -$spacing-unit / 2;
-  @extend %clearfix;
+.project-text {
+  max-width: 85%;
+  margin: auto;
 }
 
-.project-col {
-  float: left;
-  // margin-bottom: $spacing-unit / 2;
-  // padding-left: $spacing-unit / 2;
-}
-
-.project-col-1 {
-  border: .15em solid pink;
-  width: -webkit-calc(35%);
-  width:         calc(35%);
-  //
-  // width: -webkit-calc(33.33% - (#{$spacing-unit} / 2));
-  // width:         calc(33.33% - (#{$spacing-unit} / 2));
-}
-
-.project-col-2 {
-  border: .15em solid pink;
-  width: -webkit-calc(63%);
-  width:         calc(63%);
-
-  // width: -webkit-calc(66.67% - (#{$spacing-unit} / 2));
-  // width:         calc(66.67% - (#{$spacing-unit} / 2));
-}
-//
-// .project-col-3 {
-//   width: -webkit-calc(33.33% - (#{$spacing-unit} / 2));
-//   width:         calc(33.33% - (#{$spacing-unit} / 2));
+//   /* adapted from footer-col css - later, decided to omit to make thumbnail more visible */
+// .project-col-wrapper {
+//   @include relative-font-size(0.9375);
+//   // color: $grey-color;
+//   // margin-left: -$spacing-unit / 2;
+//   @extend %clearfix;
 // }
-
-@include media-query($on-laptop) {
-  .project-col-1,
-  .project-col-2 {
-    width: -webkit-calc(50% - (#{$spacing-unit} / 2));
-    width:         calc(50% - (#{$spacing-unit} / 2));
-  }
-
-  .project-col-3 {
-    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-    width:         calc(100% - (#{$spacing-unit} / 2));
-  }
-}
-
-@include media-query($on-palm) {
-  .footer-col {
-    float: none;
-    width: -webkit-calc(100% - (#{$spacing-unit} / 2));
-    width:         calc(100% - (#{$spacing-unit} / 2));
-  }
-}
+//
+// .project-col {
+//   float: left;
+//   // margin-bottom: $spacing-unit / 2;
+//   // padding-left: $spacing-unit / 2;
+// }
+//
+// .project-col-1 {
+//   border: .15em solid pink;
+//   width: -webkit-calc(35%);
+//   width:         calc(35%);
+//   //
+//   // width: -webkit-calc(33.33% - (#{$spacing-unit} / 2));
+//   // width:         calc(33.33% - (#{$spacing-unit} / 2));
+// }
+//
+// .project-col-2 {
+//   border: .15em solid pink;
+//   width: -webkit-calc(63%);
+//   width:         calc(63%);
+//
+//   // width: -webkit-calc(66.67% - (#{$spacing-unit} / 2));
+//   // width:         calc(66.67% - (#{$spacing-unit} / 2));
+// }
+// //
+// // .project-col-3 {
+// //   width: -webkit-calc(33.33% - (#{$spacing-unit} / 2));
+// //   width:         calc(33.33% - (#{$spacing-unit} / 2));
+// // }
+//
+// @include media-query($on-laptop) {
+//   .project-col-1,
+//   .project-col-2 {
+//     width: -webkit-calc(50% - (#{$spacing-unit} / 2));
+//     width:         calc(50% - (#{$spacing-unit} / 2));
+//   }
+//
+//   .project-col-3 {
+//     width: -webkit-calc(100% - (#{$spacing-unit} / 2));
+//     width:         calc(100% - (#{$spacing-unit} / 2));
+//   }
+// }
+//
+// @include media-query($on-palm) {
+//   .footer-col {
+//     float: none;
+//     width: -webkit-calc(100% - (#{$spacing-unit} / 2));
+//     width:         calc(100% - (#{$spacing-unit} / 2));
+//   }
+// }
 
 
 /**
