@@ -6,43 +6,52 @@ layout: default
   <h1 class="post-title text-centered">Projects</h1>
 </header>
 
+{% for project in site.data.projects %}
 
-<div id="browseum" class="project-wrapper">
-  <div class="bordered">
+    <div id="{{project.id}}" class="project-wrapper">
+      <div class="bordered">
 
-      <p/>
-      <h2 class="text-centered bold underlined">Browseum</h2>
+          <p/>
+          <h2 class="text-centered bold underlined">{{project.title}}</h2>
 
-      <p/>
-      <img src="/assets/images/projects/browseum-thumbnail.png" class="centered thin-border medium" style="border-color:grey"/>
+          <p/>
+          <img src="{{project.image_path}}" class="centered thin-border medium" style="border-color:grey"/>
 
-      <hr>
+          <hr>
 
-      <p/>
-      <p class="project-text"> Browse leisurely through pieces of famous art with Browseum. It randomly selects and displays artwork from the Harvard Art Museums. At the click of a button, get a new random work of art (including by artist, culture, or time period), see your recent browsing history, or add a work of art to your list of favorites.</p>
-      <p/>
+          <p/>
+          <p class="project-text"> {{project.description}}</p>
+          <p/>
 
-      <hr>
+          <hr>
 
-      <p/>
-      <p class="project-text text-centered italicized underlined"> Principal Languages:</p>
-      <p class="project-text text-centered italicized"> React for the front-end, with a Redux-managed state. Ruby on Rails API for the back-end.</p>
+          <p/>
+          <p class="project-text text-centered italicized underlined"> Principal Languages:</p>
+          <p class="project-text text-centered italicized"> {{project.languages}}</p>
 
-      <p/>
-      <ul class="project-links-list">
+          <p/>
+          <ul class="project-links-list">
 
-        <li class="project-link"> <a href="https://browseum.herokuapp.com/" target="_blank"><img src="/assets/images/projects/heroko-thumbnail.jpg" style="padding-right:0.5em"/><span>App Demo</span></a></li>
 
-        <li class="project-link"> <a href="https://github.com/breadoliveoilsalt/browseum" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use></svg> <span>GitHub Repository</span></a></li>
+          {%- if project.app_url -%}
+            <li class="project-link"> <a href="{{project.app_url}}" target="_blank"><img src="/assets/images/projects/heroko-thumbnail.jpg" style="padding-right:0.5em"/><span>App Demo</span></a></li>
+          {%- endif -%}
 
-        <li class="project-link"> <a href="https://github.com/breadoliveoilsalt/browseum" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#youtube' | relative_url }}"></use></svg> <span>Video Demo</span></a></li>
+          {%- if project.github_url -%}
+            <li class="project-link"> <a href="{{project.github_url}}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use></svg> <span>GitHub Repository</span></a></li>
+          {%- endif -%}
 
-      </ul>
-      <p/>
+          {%- if project.video_url -%}
+            <li class="project-link"> <a href="{{video_url}}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#youtube' | relative_url }}"></use></svg> <span>Video Demo</span></a></li>
+          {%- endif -%}
 
-  </div>
-</div>
+          </ul>
+          <p/>
 
+      </div>
+    </div>
+
+{% endfor %}
 
 <!-- Extra p for spacing at the very bottom above footer-->
 <p/>

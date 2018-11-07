@@ -1,0 +1,8 @@
+- id: browseum
+  title: Browseum
+  image_path: /assets/images/projects/browseum-thumbnail.png
+  description: Browse leisurely through pieces of famous art with Browseum. It randomly selects and displays artwork from the Harvard Art Museums. At the click of a button, get a new random work of art (including by artist, culture, or time period), see your recent browsing history, or add a work of art to your list of favorites.
+  languages: React for the front-end, with a Redux-managed state. Ruby on Rails API for the back-end.
+  app_url: https://browseum.herokuapp.com/
+  github_url: https://github.com/breadoliveoilsalt/browseum
+  video_url:
