@@ -118,6 +118,10 @@ img.small {
   .bordered {
     border: .15em solid grey;
   }
+  hr {
+    margin-inline-start: 5em;
+    margin-inline-end: 5em;
+  }
 }
 
 .project-text {
@@ -148,6 +152,7 @@ li.project-link a {
     // padding: 14px 16px;
     text-decoration: none;
 }
+
 //   /* adapted from footer-col css - later, decided to omit to make thumbnail more visible */
 // .project-col-wrapper {
 //   @include relative-font-size(0.9375);
