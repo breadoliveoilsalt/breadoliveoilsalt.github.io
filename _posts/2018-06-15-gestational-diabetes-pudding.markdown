@@ -32,11 +32,11 @@ If you've been diagnosed with gestational diabetes, I'm sorry, and I hope everyt
   * Get your blender. Put it on the kitchen scale if measuring by weight.
   * Toss in ingredients (by weight or measuring spoon).
 
-![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-1.jpg){:class="small border centered"}
+![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-1.JPG){:class="small border centered"}
 
   * Blend. Taste and add anything it needs more of, taking notes for next time. Blend again.
 
-![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-2.jpg){:class="small border centered"}
+![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-2.JPG){:class="small border centered"}
 
   * Put mixture in tupperware with a cover. Put tupperware in fridge.
   * Wait a few hours for the pudding to set. Best if overnight. Gets better each day (and will stay good about 3-4 days)
@@ -46,11 +46,11 @@ If you've been diagnosed with gestational diabetes, I'm sorry, and I hope everyt
 * To serve:
   * Assume a batch of the ingredients results in 4 servings. I've found that, on average, one of those servings is approximately 94g by weight, or a heaping 1/3 cup, or just under 1/2 a cup.
 
-![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-3.jpg){:class="small border centered"}
+![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-3.JPG){:class="small border centered"}
 
   * The pudding will stay good about 3-4 days in the fridge.  It gets better, and its taste complexity develops, with each passing day.  If you see the pudding separate a bit (for example, there is some water pooling on top), just stir it back together before serving.
 
-![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-4.jpg){:class="small border centered"}
+![](/assets/images/2018-06-15-gestational-diabetes-pudding/image-4.JPG){:class="small border centered"}
 
 <p/>
 
