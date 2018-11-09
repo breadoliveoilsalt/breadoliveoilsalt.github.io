@@ -40,6 +40,10 @@ header_pages:
   - cooking.md
 
 exclude: [scraps]
+
+# Google Analytics
+google_analytics: UA-128952291-1
+
 #
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
