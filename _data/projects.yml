@@ -6,3 +6,12 @@
   app_url: https://browseum.herokuapp.com/
   github_url: https://github.com/breadoliveoilsalt/browseum
   video_url:
+
+- id: garden-tracker
+  title: Garden Tracker
+  image_path: /assets/images/projects/garden-tracker-thumbnail.png
+  description: Garden Tracker helps you keep track of gardens you establish, the species you like to plant, and the plantings you put in the ground. Create a password-protected account, or sign in via GitHub, to get started.  
+  languages: Ruby on Rails as the main building tool. Javascript for ajax requests. OAuth for signing in with GitHub. Semantic UI for styling.
+  app_url: https://garden-plot-tracker.herokuapp.com/
+  github_url: https://github.com/breadoliveoilsalt/garden-tracker
+  video_url:
