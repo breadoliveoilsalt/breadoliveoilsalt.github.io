@@ -5,7 +5,7 @@
   languages: React for the front-end, with a Redux-managed state. Ruby on Rails API for the back-end. Semantic UI for styling.
   app_url: https://browseum.herokuapp.com/
   github_url: https://github.com/breadoliveoilsalt/browseum
-  video_url:
+  video_url: https://youtu.be/gzSKxFrQHM4
 
 - id: garden-tracker
   title: Garden Tracker
@@ -14,7 +14,7 @@
   languages: Ruby on Rails as the main building tool. Javascript for ajax requests. OAuth for signing in with GitHub. Semantic UI for styling.
   app_url: https://garden-plot-tracker.herokuapp.com/
   github_url: https://github.com/breadoliveoilsalt/garden-tracker
-  video_url:
+  video_url: https://youtu.be/059gvvq26zk
 
 - id: veg-info
   title: Veg Info CLI App
@@ -23,4 +23,4 @@
   languages: App written in Ruby. Nokogiri gem used for scraping.
   app_url:
   github_url: https://github.com/breadoliveoilsalt/veg-info-cli-app
-  video_url:
+  video_url: https://youtu.be/esk4RNddoag
