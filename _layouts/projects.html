@@ -32,18 +32,18 @@ layout: default
           <p/>
           <ul class="project-links-list">
 
+            {%- if project.github_url -%}
+              <li class="project-link"> <a href="{{project.github_url}}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use></svg> <span>GitHub Repository</span></a></li>
+            {%- endif -%}
 
-          {%- if project.app_url -%}
-            <li class="project-link"> <a href="{{project.app_url}}" target="_blank"><img src="/assets/images/projects/heroko-thumbnail.jpg" style="padding-right:0.5em"/><span>App Demo</span></a></li>
-          {%- endif -%}
+            {%- if project.video_url -%}
+              <li class="project-link"> <a href="{{project.video_url}}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#youtube' | relative_url }}"></use></svg> <span>Video Demo</span></a></li>
+            {%- endif -%}
 
-          {%- if project.github_url -%}
-            <li class="project-link"> <a href="{{project.github_url}}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#github' | relative_url }}"></use></svg> <span>GitHub Repository</span></a></li>
-          {%- endif -%}
+            {%- if project.app_url -%}
+              <li class="project-link"> <a href="{{project.app_url}}" target="_blank"><img src="/assets/images/projects/heroko-thumbnail.jpg" style="padding-right:0.5em"/><span>Live Demo</span></a></li>
+            {%- endif -%}
 
-          {%- if project.video_url -%}
-            <li class="project-link"> <a href="{{project.video_url}}" target="_blank"><svg class="svg-icon"><use xlink:href="{{ '/assets/minima-social-icons.svg#youtube' | relative_url }}"></use></svg> <span>Video Demo</span></a></li>
-          {%- endif -%}
 
           </ul>
           <p/>
