@@ -23,7 +23,7 @@ To get to our loaf of bread, our most important allies are time and temperature.
   * Water
 
 * Tools
-  * Digital kitchen scale (here's what I use)
+  * Digital kitchen scale
   * Dough scraper (optional)
   * A lint-free dish towel
   * Some kind of strainer or basket, about 6 inches wide (available at a dollar store)
@@ -85,7 +85,7 @@ After mixing the ingredients, let the dough sit there for 30 minutes. This rest 
 
 ![](/assets/images/2017-09-20-a-simple-recipe-for-great-bread/image6.png){:class="small centered"}
 
-<h1 class="text-centered bold underlined"> Step 2: Sit back and Let It Ride, with a Little Bit of Love Once in a While </h1>
+<h1 class="text-centered bold underlined"> Step 2: Sit Back and Let It Ride, with a Little Bit of Love Once in a While </h1>
 
 <h4 class="text-centered bold"> Total Time: 2 minutes of effort by you, plus 12-24 hours of wait time before Step 3 </h4>
 

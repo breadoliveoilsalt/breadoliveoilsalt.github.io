@@ -19,7 +19,7 @@
 - id: veg-info
   title: Veg Info CLI App
   image_path: /assets/images/projects/veg-info-thumbnail.png
-  description: Veg Info scrapes information about vegetables from Cornell University's gardening website and allows you to view that information from your computer's terminal.
+  description: Veg Info scrapes information about vegetables from Cornell University's gardening websites and allows you to view that information from your computer's terminal.
   languages: App written in Ruby. Nokogiri gem used for scraping.
   app_url:
   github_url: https://github.com/breadoliveoilsalt/veg-info-cli-app
