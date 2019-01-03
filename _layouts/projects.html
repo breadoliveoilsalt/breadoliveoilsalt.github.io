@@ -48,6 +48,13 @@ layout: default
           </ul>
           <p/>
 
+          {%- if project.extra -%}
+              <hr>
+              <p/>
+              <p class="project-text text-centered italicized"> {{project.extra}}</p>
+              <p/>
+          {%- endif -%}
+
       </div>
     </div>
 
