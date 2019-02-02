@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "React/Rails/Redux/React Router/Heroku: Here's a Baseline for Building Out a React App for Deployment to Heroku"
+title:  "React/Rails/Redux/React Router/Heroku: Here's a Baseline for Building Out a React App (with Some Additional Fixin's) for Deployment to Heroku"
 date:   2019-02-2 12:00:00 -0400
 categories: coding
 ---
