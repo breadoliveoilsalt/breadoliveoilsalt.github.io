@@ -25,3 +25,10 @@
   app_url:
   github_url: https://github.com/breadoliveoilsalt/veg-info-cli-app
   video_url: https://youtu.be/esk4RNddoag
+
+- id: baseline-react-app
+  title: A Baseline React App with a Rails API, Redux State, and React Router Built In, for Deploying to Heroku
+  image_path: /assets/images/2019-02-02-baseline-react-app/react-icon.svg
+  description: Here's a barebones React app to build from when you'd like to get sprinting with React, a Rails API, Redux, and/or React Router. The app relies on a PostgreSQL database to make deployment to Heroku easy. Everything's hooked up, ready for you to get building. Head to the GitHub link below, clone the repository, and check out the instructions in the README for how to get started.
+  languages: React for the front-end, with a Redux-managed state. Ruby on Rails API for the back-end.
+  github_url: https://github.com/breadoliveoilsalt/baseline-react-app-rails-api
