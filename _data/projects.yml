@@ -7,6 +7,15 @@
   github_url: https://github.com/breadoliveoilsalt/browseum
   video_url: https://youtu.be/gzSKxFrQHM4
 
+- id: getMouz
+  title: Get Mouz!
+  image_path: /assets/images/projects/getMouz-thumbnail.png
+  description: Use the arrow keys to help the cat avoid cascading rain and tag the mouse in this cartoonish, retro-style game! Based on the wacky behavior of our tabby cat.
+  languages: React for the front-end, with a Redux-managed state. Ruby on Rails API for the back-end.
+  app_url: https://getmouz.herokuapp.com/
+  github_url: https://github.com/breadoliveoilsalt/getMouz
+  video_url:
+
 - id: garden-tracker
   title: Garden Tracker
   image_path: /assets/images/projects/garden-tracker-thumbnail.png
