@@ -14,7 +14,7 @@
   languages: React for the front-end, with a Redux-managed state. Ruby on Rails API for the back-end.
   app_url: https://getmouz.herokuapp.com/
   github_url: https://github.com/breadoliveoilsalt/getMouz
-  video_url:
+  video_url: https://youtu.be/H2TNqT2k7wo
 
 - id: garden-tracker
   title: Garden Tracker
