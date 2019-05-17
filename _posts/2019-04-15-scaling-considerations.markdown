@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Scaling Considerations, for Cocktail Parties"
+title:  "Web App Scaling Considerations, for Cocktail Parties"
 date:   2019-04-15 12:00:00 -0400
 categories: coding
 ---
