@@ -76,9 +76,9 @@ class Refrigerator
 
   def get_names(data)
       # When `#initialize` is called, we populate @food_items with a new array...
-    data.collect { |thing_name|
+    data.collect do |thing_name|
       FoodItem.new(thing_name)
-    }
+    end
       # ...filled with lightweight FoodItem objects that respond to `#name', whose
       # return value we supplied with our input data array.
   end
@@ -117,9 +117,9 @@ class Refrigerator
   def get_names(data)
       #...and now the values in our hash provide the return value for the `#quantity`
       # method call on a FoodItem object.
-    data.collect { |thing_name, quantity|
+    data.collect do |thing_name, quantity|
       FoodItem.new(thing_name, quantity)
-    }
+    end
   end
 
 end

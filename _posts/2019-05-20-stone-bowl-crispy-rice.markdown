@@ -17,7 +17,7 @@ Getting the rice sufficiently crispy might involve some experimentation to see w
 
 ![](/assets/images/2019-05-20-stone-bowl-crispy-rice/rice-image1.JPG){:class="medium border centered"}
 
-2) Although rice crisps at high temperatures, heat your pan somewhere below medium and low heat.  Relying on such low heat is counterintuitive, but using a lid will ensure that enough heat is trapped to get the rice where it needs to go.  Here's what my flame looked like.  You can see how low it was:  
+2) Although rice crisps at high temperatures, heat your pan somewhere between medium and low heat.  Relying on such low heat is counterintuitive, but using a lid will ensure that enough heat is trapped to get the rice where it needs to go.  Here's what my flame looked like.  You can see how low it was:  
 
 ![](/assets/images/2019-05-20-stone-bowl-crispy-rice/rice-image2.JPG){:class="medium border centered"}
 
