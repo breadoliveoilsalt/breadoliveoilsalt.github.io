@@ -1,3 +1,11 @@
+- id: birch
+  title: Birch
+  image_path: /assets/images/projects/birch-thumbnail.png
+  description: Use Birch to search for your next favorite book! Powered by the Google Books API.
+  languages: React for the front-end, with a Redux-managed state and Thunks for asyncronous API requests. Includes unit tests using Jest, Enzyme, Chai, Sinon, fetch-mock, and redux-mock-store.
+  app_url: https://birch-book-search.herokuapp.com/
+  github_url: https://github.com/breadoliveoilsalt/birch-book-search
+
 - id: browseum
   title: Browseum
   image_path: /assets/images/projects/browseum-thumbnail.png
