@@ -1,9 +1,8 @@
 ---
 layout: post
-title: "Essential & Relevant: A Unit Test Balancing Act"
-authors: ["tony-distinti"]
-tags: ["Apprenticeship", "Coding", "macOS"]
-social-img:
+title: "Some Notes on Terminal, Bash, and Setting the `PATH`"
+date:   2019-09-17 12:00:00 -0400
+categories: coding
 
 ---
 
@@ -17,9 +16,12 @@ A few days later, when thinking about what to write for this blog post, I though
 
 By the way, the problem I suspected with GNU Screen was completely wrong.  The solution to the actual problem is described [at the bottom](). LINK AND DESCRIPTION TO COME.
 
-**So, what is the Terminal on a Mac?**
+-------------------------------------------------------------------------
+<p />
 
-The [Terminal](https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/mac) is a programg for opening up a *shell* on your computer.  
+<p class="text-centered bold underlined">So, what is the Terminal on a Mac?</p>
+
+The [Terminal](https://support.apple.com/guide/terminal/open-or-quit-terminal-apd5265185d-f365-44cb-8b09-71a064a42125/mac) is a program for opening up a *shell* on your computer.  
 
 **Ok, so what's a shell?**
 
@@ -39,9 +41,9 @@ Before we get there, let's take a step back and ask some other questions.
 
 **What happens when Bash opens?**
 
-The way Bash appears and its functionality depend on certain *[environmental variables](https://linuxhint.com/bash-environment-variables/)* being set as it opens.  I think the simple way to think about the environmental variables is that they are settings that can affect Bash, and perhaps applications you open and use through Bash.
+The way Bash appears and its functionality depend on certain *[environment variables](https://linuxhint.com/bash-environment-variables/)* being set as it opens.  I think the simple way to think about the environment variables is that they are settings that can affect Bash, and perhaps applications you open and use through Bash.
 
-There are environmental variables for many differing things, including the prompt you see next to your cursor at the terminal.  On a Mac, every time a new Terminal window is opened with Bash, many of these environmental variables are set by default.  You can see a list of these variables and their default if you type `man bash` (for Bash Manual) at the Bash prompt.  
+There are environment variables for many differing things, including the prompt you see next to your cursor at the terminal.  On a Mac, every time a new Terminal window is opened with Bash, many of these environment variables are set by default.  You can see a list of these variables and their default if you type `man bash` (for Bash Manual) at the Bash prompt.  
 
 **What does this have to do with `PATH`?**
 
@@ -49,7 +51,7 @@ If you've ever used the `cd` command in Bash, you know that you can "enter into"
 
 You could take this same action from any directory you `cd`'d into with Bash.  No matter which directory your Bash prompt was in, Bash would know that when you typed `vim README.md` you wanted to open up an application called Vim, even though Vim is not located in your current directory.  How does Bash know to do this?
 
-This is where `PATH` comes in.  `PATH` is, fundamentally an [environmental variable](https://scriptingosx.com/2017/04/on-bash-environment-variables/) that lists a set of directories for Bash to check when a user enters a command that is not located in the user's current directory.  So when a user begins a command with `vim`, but Vim is not in the current directory, Bash says to itself, "Let me see if I can find Vim in the directories listed in PATH before I come back to the user with an error because I don't know what to do."
+This is where `PATH` comes in.  `PATH` is, fundamentally an [environment variable](https://scriptingosx.com/2017/04/on-bash-environment-variables/) that lists a set of directories for Bash to check when a user enters a command that is not located in the user's current directory.  So when a user begins a command with `vim`, but Vim is not in the current directory, Bash says to itself, "Let me see if I can find Vim in the directories listed in PATH before I come back to the user with an error because I don't know what to do."
 
 Want to see which directories are in your current path?  At the Bash prompt, type `$PATH`.  You'll see a response from Bash that might look something like this:
 
@@ -81,7 +83,7 @@ To understand this suggestion, the first thing I'd explore is...
 
 **What is `.bash_profile`?**
 
-When Bash loads, it can look to several different sources for instructions and the values of particular environmental variables.  These sources include files such as `.bash_profile` and `.bashrc`, which are located in the directory `[user hard drive]/Users/[your user name]`.  Which one should you use?  There are numerous discussions out on the internet on this topic, such as [here](https://medium.com/@kingnand.90/what-is-the-difference-between-bash-profile-and-bashrc-d4c902ac7308), [here](https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc), and [here](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path).
+When Bash loads, it can look to several different sources for instructions and the values of particular environment variables.  These sources include files such as `.bash_profile` and `.bashrc`, which are located in the directory `[user hard drive]/Users/[your user name]`.  Which one should you use?  There are numerous discussions out on the internet on this topic, such as [here](https://medium.com/@kingnand.90/what-is-the-difference-between-bash-profile-and-bashrc-d4c902ac7308), [here](https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc), and [here](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path).
 
 At the current moment, as my rudimentary knowledge on this topic is developing, I think the safest and easiest bet is to add the text to `.bash_profile` if you're working on a Mac, since Terminal's default is to look to `.bash_profile` every time a new Terminal window with Bash is opened.
 
@@ -107,7 +109,7 @@ So this...
 
 ...is essentially saying:
 
-1. We're modifying the `PATH` environmental variable.
+1. We're modifying the `PATH` environment variable.
 2. From now on, the first directory that Bash should look to when executing a command is `[user hard drive]/usr/local/bin`.  This is where Homebrew installs applications, and Bash knows to look there first because it is now the first directory listed in the `PATH`.
 3. If Bash hasn't found a command in the Homebrew installation directory, then Bash should look the default directories that have been assigned to the `PATH` variable prior to this new assignment.  By using a dollar sign (`$PATH`), the code says to add the value of the `PATH` variable (the list those default directories) here.  These default directories likely include:
 
