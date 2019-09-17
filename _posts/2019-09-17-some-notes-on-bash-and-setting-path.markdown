@@ -14,7 +14,7 @@ I suspected that this was happening because the Terminal didn't have access to t
 
 A few days later, when thinking about what to write for this blog post, I thought it might be a great opportunity to try to begin filling those gaps and to share what I came across in case others have similar questions.  The discussion below starts off with basic questions about the Terminal and Bash.  Then it moves on how the Terminal window's `PATH` variable is set and how its particular formatting works.  The answers are overly simplistic, but hopefully helpful to anyone who might be reading.  The sources I used are in the links.  
 
-By the way, the problem I suspected with GNU Screen was completely wrong.  The solution to the actual problem is described [at the bottom](). LINK AND DESCRIPTION TO COME.
+By the way, the problem I suspected with GNU Screen was completely wrong.  The solution to the actual problem is described [at the bottom](/coding/2019/09/17/some-notes-on-bash-and-setting-path.html#screen-solution).
 
 -------------------------------------------------------------------------
 <p />
@@ -43,11 +43,11 @@ Before we get there, let's take a step back and ask some other questions.
 
 The way Bash appears and its functionality depend on certain *[environment variables](https://linuxhint.com/bash-environment-variables/)* being set as it opens.  I think the simple way to think about the environment variables is that they are settings that can affect Bash, and perhaps applications you open and use through Bash.
 
-There are environment variables for many differing things, including the prompt you see next to your cursor at the terminal.  On a Mac, every time a new Terminal window is opened with Bash, many of these environment variables are set by default.  You can see a list of these variables and their default if you type `man bash` (for Bash Manual) at the Bash prompt.  
+There are environment variables for many differing things, including the prompt you see next to your cursor at the terminal.  On a Mac, every time a new Terminal window is opened with Bash, many of these environment variables are set by default.  You can see a list of these variables and their default if you type `man bash` (for Bash Manual) at the Bash prompt.  If you want to see the current state of environmental variables, you can run `env`.
 
 **What does this have to do with `PATH`?**
 
-If you've ever used the `cd` command in Bash, you know that you can "enter into" different directories (aka, folders or repositories) with Bash and enter commands that affect this particular directory.  For example, if you wanted to use the Vim text editor to create and edit a file called  `README.md` in your current directory, you could type `vim README.MD`, and Bash would know to open up Vim, and once the file was saved with Vim, `README.md` would be in saved in your current directory.  
+If you've ever used the `cd` command in Bash, you know that you can "enter into" different directories with Bash and enter commands that affect this particular directory.  For example, if you wanted to use the Vim text editor to create and edit a file called  `README.md` in your current directory, you could type `vim README.MD`, and Bash would know to open up Vim, and once the file was saved with Vim, `README.md` would be in saved in your current directory.  
 
 You could take this same action from any directory you `cd`'d into with Bash.  No matter which directory your Bash prompt was in, Bash would know that when you typed `vim README.md` you wanted to open up an application called Vim, even though Vim is not located in your current directory.  How does Bash know to do this?
 
@@ -69,7 +69,9 @@ The stuff after `-bash: ` is a list of the various directories in the `PATH` tha
 
 The order of the list is important.  Bash will check the directories [in the order in which they are listed](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path).  
 
-Please note: the directories above are generally "hidden" on a Mac.  So to see them from Bash, you'll have to be in your top most, "hard drive" directory and use the command `ls -lah`. If you are looking at a Finder window to see a visual representation of folders, make sure you are in a window showing the contents of your top most directory and then hit `command` + `shift` + `.` to see the hidden directories.    
+Please note: the directories above are generally "hidden" on a Mac.  So to see them from Bash, you'll have to be in your top most, "hard drive" directory and use the command `ls -lah`. Or, from any directory, run the command `ls -lah /`.
+
+If you are looking at a Finder window to see a visual representation of folders, make sure you are in a window showing the contents of your top most directory and then hit `command` + `shift` + `.` to see the hidden directories.    
 
 Once you're able to see these "hidden" directories, go ahead and poke look around!  You'll see that Bash depends on its PATH to interpret even fundamental commands like `ls` (in `[user hard drive]/bin`) and `cd` (in `[user hard drive]/usr/bin).
 
@@ -90,6 +92,8 @@ At the current moment, as my rudimentary knowledge on this topic is developing, 
 **Ok, so it looks like `.bash_profile` is now setting the `PATH` when my Bash session opens.  But what does this like of code really mean? For example, what is `export`?
 
 `export` is a command that says: what ever follows on this line of code [should apply to all of Bash's child processes](https://superuser.com/questions/153371/what-does-export-do-in-bash) from that point on.  In overly-simplistic plain language, I think this means: for commands executed with Bash from now on, those commands will look to and depend on whatever is `export`ed.  
+
+`export` is a command that says: put this variable in the `env` of all [Bash's child processes](https://superuser.com/questions/153371/what-does-export-do-in-bash) from that point on.  In overly-simplistic plain language, I think this means: for commands executed with Bash from now on, the environmental variables have been updated according to whatever was `export`ed.  
 
 **What happens next?**
 
@@ -131,7 +135,8 @@ So, in sum, once `.bash_profile` modifies the `PATH`, the directories that make 
 I hope all this helps make clearer what is going on under the hood the next time you might have to modify your Bash `PATH`, or perhaps even write a [Bash script](https://linuxconfig.org/bash-scripting-tutorial-for-beginners).  Thanks for reading!  
 
 -----------
+<p />
 
-**__Solution to Launching the Latest Version of GNU Screen__**
+<p id="screen-solution" class="text-centered bold underlined">Epilogue: Solution to Launching the Latest Version of GNU Screen</p>
 
 After installing the latest version of [GNU Screen](https://www.gnu.org/software/screen/) via [Homebrew](https://brew.sh/) and restarting my Terminal session, typing in `screen` would launch the older, pre-installed version of GNU Screen.  The problem was simply that the command to launch the new version of GNU Screen required the version number.  That is, I had to type `screen-4.6.2`.  I only discovered this by chance after doing a dive into where Homebrew tends to install files: the hidden folders under `[user hard drive]/usr/local/Cellar` and `[user hard drive]/usr/local/bin`.
