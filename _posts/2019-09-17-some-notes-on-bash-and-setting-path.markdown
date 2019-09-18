@@ -8,11 +8,11 @@ categories: coding
 
 It's funny how going back to basics can make your realize what you've been taking for granted and don't understand.  
 
-On the first day of my apprenticeship at 8th Light, I was presented with a wiped MacBook Pro, ripe for configuration and the installation of various libraries, Ruby gems, etc.  In the midst of this set up, I got the urge to play around with splitting Terminal windows.  I went hunting for the latest version of [GNU Screen](https://www.gnu.org/software/screen/), which would allow me to split a single Terminal window, and installed it via [Homebrew](https://brew.sh/).  I quickly hit a wall, however, finding that couldn't get this new version of GNU Screen to run when I typed the launch command `screen`.  Instead, an older version of GNU Screen would run, one that came pre-installed with the Mac OS and didn't have the functionality I wanted.  
+On the first day of my apprenticeship at 8th Light, I was presented with a wiped MacBook Pro, ripe for configuration and the installation of various libraries, Ruby gems, etc.  In the midst of setting up the laptop, I got the urge to play around with splitting Terminal windows.  I went hunting for the latest version of [GNU Screen](https://www.gnu.org/software/screen/), which would allow me to split a single Terminal window, and installed it via [Homebrew](https://brew.sh/).  I quickly hit a wall, however, finding that couldn't get this new version of GNU Screen to run when I typed the launch command `screen`.  Instead, an older version of GNU Screen would run, one that came pre-installed with the Mac OS and didn't have the functionality I wanted.  
 
-I suspected that this was happening because the Terminal didn't have access to the command to launch the latest version of GNU Screen, and something in the back of my brain told me I had to then play with the `PATH` associated with the Terminal session.  I had done this in the past and had a basic understanding of the process, but when going down proverbial internet rabbit hole to refresh my memory, I quickly realized how much I had forgotten.  More poignantly, when tempted to get quick fixes by copying and pasting code snippets from [Stack Overflow](https://stackoverflow.com/), I realized *how much I didn't know* and *how much I couldn't articulate* about what was going on with the Terminal, setting the `PATH`, etc.  
+I suspected that this was happening because the Terminal didn't have access to the command to launch the latest version of GNU Screen.  Something in the back of my brain told me that the solution was to play with the `PATH` associated with the Terminal session.  I had done this in the past and had a basic understanding of the process.  When going down internet rabbit hole to refresh my memory, however, I quickly realized how much I had forgotten.  More poignantly, when tempted to get quick fixes by copying and pasting code snippets from [Stack Overflow](https://stackoverflow.com/), I realized *how much I didn't know* and *how much I couldn't articulate* about what was going on with the Terminal, setting the `PATH`, etc.  
 
-A few days later, when thinking about what to write for this blog post, I thought it might be a great opportunity to try to begin filling those gaps and to share what I came across in case others have similar questions.  The discussion below starts off with basic questions about the Terminal and Bash.  Then it moves on how the Terminal window's `PATH` variable is set and how its particular formatting works.  The answers are overly simplistic, but hopefully helpful to anyone who might be reading.  The sources I used are in the links.  
+A few days later, when thinking about what to write for this blog post, I thought this post might be a great opportunity to begin filling those gaps and to share what I came across in case others have similar questions.  Accordingly, the discussion below starts off with basic questions about the Terminal and Bash.  Then it moves on to discussing how the Terminal window's `PATH` variable is set and how its particular formatting works.  The answers are overly simplistic, but hopefully helpful to anyone who might be reading.  The sources I used are in the links.  
 
 By the way, the problem I suspected with GNU Screen was completely wrong.  The solution to the actual problem is described [at the bottom](/coding/2019/09/17/some-notes-on-bash-and-setting-path.html#screen-solution).
 
@@ -57,20 +57,20 @@ Before we get there, let's take a step back and ask some other questions.
 
 The way Bash appears and its functionality depend on certain *[environment variables](https://linuxhint.com/bash-environment-variables/)* being set as it opens.  I think the simple way to think about the environment variables is that they are settings that can affect Bash, and perhaps applications you open and use through Bash.
 
-There are environment variables for many differing things, including the prompt you see next to your cursor at the terminal.  On a Mac, every time a new Terminal window is opened with Bash, many of these environment variables are set by default.  You can see a list of these variables and their default if you type `man bash` (for Bash Manual) at the Bash prompt.  If you want to see the current state of environmental variables, you can run `env`.
+There are environment variables for many differing things, including the prompt you see next to your cursor at the terminal.  On a Mac, every time a new Terminal window is opened with Bash, many of these environment variables are set by default.  You can see a list of these variables and their defaults if you type `man bash` (for Bash Manual) at the Bash prompt and dig through the text that appears.  If you want to see the current state of environmental variables, you can run `env`.
 
 -----------
 <p />
 
 <p class="text-centered bold underlined">What does this have to do with <code>PATH</code>?</p>
 
-If you've ever used the `cd` command in Bash, you know that you can "enter into" different directories with Bash and enter commands that affect this particular directory.  For example, if you wanted to use the Vim text editor to create and edit a file called  `README.md` in your current directory, you could type `vim README.MD`, and Bash would know to open up Vim, and once the file was saved with Vim, `README.md` would be in saved in your current directory.  
+If you've ever used the `cd` command in Bash, you know that you can "enter into" a different directory with Bash and enter commands that affect the directory.  For example, if you wanted to use the Vim text editor to create and edit a file called  `README.md` in your current directory, you could type `vim README.MD`, and Bash would know to open up Vim, and once the file was saved with Vim, `README.md` would be in saved in your current directory.  
 
 You could take this same action from any directory you `cd`'d into with Bash.  No matter which directory your Bash prompt was in, Bash would know that when you typed `vim README.md` you wanted to open up an application called Vim, even though Vim is not located in your current directory.  How does Bash know to do this?
 
-This is where `PATH` comes in.  `PATH` is, fundamentally an [environment variable](https://scriptingosx.com/2017/04/on-bash-environment-variables/) that lists a set of directories for Bash to check when a user enters a command that is not located in the user's current directory.  So when a user begins a command with `vim`, but Vim is not in the current directory, Bash says to itself, "Let me see if I can find Vim in the directories listed in PATH before I come back to the user with an error because I don't know what to do."
+This is where `PATH` comes in.  `PATH` is, fundamentally an [environment variable](https://scriptingosx.com/2017/04/on-bash-environment-variables/) that lists a set of directories for Bash to check when a user enters a command that is not located in the user's current directory.  So when a user begins a command with `vim`, but Vim is not in the current directory, Bash says to itself, "Let me see if I can find Vim in the directories listed in `PATH` before I come back to the user with an error because I don't know what to do."
 
-Want to see which directories are in your current path?  At the Bash prompt, type `$PATH`.  You'll see a response from Bash that might look something like this:
+Want to see which directories are in your current `PATH`?  At the Bash prompt, type `$PATH`.  You'll see a response from Bash that might look something like this:
 
 `-bash: /usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin`
 
@@ -79,7 +79,7 @@ Want to see which directories are in your current path?  At the Bash prompt, typ
 
 <p class="text-centered bold underlined">What does all that mean??</p>
 
-The stuff after `-bash: ` is a list of the various directories in the `PATH` that Bash might check when looking to interpret a command.  Bash's output above is hard to read at first because the different directories are separated by colons.  So in other words, the line above is telling you that the following directories are in Bash's `PATH`:
+The stuff after `-bash:` is a list of the various directories in the `PATH` that Bash might check when looking to interpret a command.  Bash's output above is hard to read at first because the different directories are separated by colons.  So in other words, the line above is telling you that the following directories are in Bash's `PATH`:
 
 * `[user root directory]/usr/bin`
 * `[user root directory]/bin`
@@ -93,7 +93,7 @@ Please note: the directories above are generally "hidden" on a Mac.  So to see t
 
 If you are looking at a Finder window to see a visual representation of folders, make sure you are in a window showing the contents of your top most directory and then hit `command` + `shift` + `.` to see the hidden directories.    
 
-Once you're able to see these "hidden" directories, go ahead and poke look around!  You'll see that Bash depends on its PATH to interpret even fundamental commands like `ls` (in `[user root directory]/bin`) and `cd` (in `[user root directory]/usr/bin).
+Once you're able to see these "hidden" directories, go ahead and poke look around!  You'll see that Bash depends on its `PATH` to interpret even fundamental commands like `ls` (in `[user root directory]/bin`) and `cd` (in `[user root directory]/usr/bin`).
 
 -----------
 <p />
@@ -104,7 +104,7 @@ Let's use a real world example.  [Here](https://stackoverflow.com/questions/1034
 
 `export PATH="/usr/local/bin:$PATH"`
 
-To understand this suggestion, the first thing I'd explore is...
+To understand this suggestion, the first thing to explore is...
 
 -----------
 <p />
@@ -113,34 +113,32 @@ To understand this suggestion, the first thing I'd explore is...
 
 When Bash loads, it can look to several different sources for instructions and the values of particular environment variables.  These sources include files such as `.bash_profile` and `.bashrc`, which are located in the directory `[user root directory]/Users/[your user name]`.  Which one should you use?  There are numerous discussions out on the internet on this topic, such as [here](https://medium.com/@kingnand.90/what-is-the-difference-between-bash-profile-and-bashrc-d4c902ac7308), [here](https://apple.stackexchange.com/questions/51036/what-is-the-difference-between-bash-profile-and-bashrc), and [here](https://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path).
 
-At the current moment, as my rudimentary knowledge on this topic is developing, I think the safest and easiest bet is to add the text to `.bash_profile` if you're working on a Mac, since Terminal's default is to look to `.bash_profile` every time a new Terminal window with Bash is opened.
+At the current moment, as my rudimentary knowledge on this topic is developing, I think the safest and easiest bet is to add the text to `.bash_profile` if you're working on a Mac.  This is because Terminal, by default, looks to `.bash_profile` every time a new Terminal window with Bash is opened.
 
 -----------
 <p />
 
-<p class="text-centered bold underlined">Ok, so it looks like <code>.bash_profile</code> is now setting the <code>PATH</code> when my Bash session opens.  But what does this like of code really mean? For example, what is <code>export</code>? </p>
+<p class="text-centered bold underlined">Ok, so it looks like <code>.bash_profile</code> is now setting the <code>PATH</code> when my Bash session opens.  But what does this line of code really mean? For example, what is <code>export</code>? </p>
 
-`export` is a command that says: what ever follows on this line of code [should apply to all of Bash's child processes](https://superuser.com/questions/153371/what-does-export-do-in-bash) from that point on.  In overly-simplistic plain language, I think this means: for commands executed with Bash from now on, those commands will look to and depend on whatever is `export`ed.  
-
-`export` is a command that says: put this variable in the `env` of all [Bash's child processes](https://superuser.com/questions/153371/what-does-export-do-in-bash) from that point on.  In overly-simplistic plain language, I think this means: for commands executed with Bash from now on, the environmental variables have been updated according to whatever was `export`ed.  
+`export` is a command that says: put this variable in the `env` of all [Bash's child processes](https://superuser.com/questions/153371/what-does-export-do-in-bash) from that point on.  In overly-simplistic terms, I think this means: for commands executed with Bash from now on, the environmental variables have been updated according to whatever was `export`ed.  
 
 -----------
 <p />
 
 <p class="text-centered bold underlined">What happens next?</p>
 
-`PATH` is a Bash environment variable and discussed above, and the `=` operator sets what the `PATH` should be from now on.
+The `=` operator sets what the `PATH` should be from now on.
 
 -----------
 <p />
 
-<p class="text-centered bold underlined">Ok, so I get that colons separate distinct directories when the <code>PATH</code> variable is being set, and <code>.bash_profile</code> is now defining the <code>PATH</code> as the BASH session loads.  But what's up with <code>$PATH</code> at the end of the line? In particular, why is there a dollar sign?</p>
+<p class="text-centered bold underlined">Ok, so I get that colons separate distinct directories when the <code>PATH</code> variable is being set, and <code>.bash_profile</code> is now defining the <code>PATH</code> as the Bash session loads.  But what's up with <code>$PATH</code> at the end of the line? In particular, why is there a dollar sign?</p>
 
 Let's take a look again at the line of code suggested by the Stack Overflow answer, after the `export` command:
 
 `PATH="/usr/local/bin:$PATH"`
 
-As it turns out, with the [Bash language](https://stackoverflow.com/questions/28693737/is-bash-a-programming-language), a variable is assigned a value by simply writing the variable name, followed by a `=` operator, and then the value .  But to *access* the value assigned (this access is generally called "[parameter expansion](https://opensource.com/article/17/6/bash-parameter-expansion"), the variable needs to be preceded by `$`.  See, for example, the discussions [here](https://stackoverflow.com/questions/18658190/bash-when-to-use-in-front-of-variables) and [here](https://opensource.com/article/17/6/bash-parameter-expansion).  In other words, the `$` is analogous to a getter method for the variable that follows or an operator for string concatenation.  
+As it turns out, with the [Bash language](https://stackoverflow.com/questions/28693737/is-bash-a-programming-language), a variable is assigned a value by simply writing the variable name, followed by a `=` operator, and then the value .  But to *access* the value assigned (which is generally called "[parameter expansion](https://opensource.com/article/17/6/bash-parameter-expansion")), the variable needs to be preceded by `$`.  See, for example, the discussions [here](https://stackoverflow.com/questions/18658190/bash-when-to-use-in-front-of-variables) and [here](https://opensource.com/article/17/6/bash-parameter-expansion).  In other words, the `$` is analogous to a getter method for the variable that follows or an operator for string concatenation.  
 
 So this...
 
@@ -150,7 +148,7 @@ So this...
 
 1. We're modifying the `PATH` environment variable.
 2. From now on, the first directory that Bash should look to when executing a command is `[user root directory]/usr/local/bin`.  This is where Homebrew installs applications, and Bash knows to look there first because it is now the first directory listed in the `PATH`.
-3. If Bash hasn't found a command in the Homebrew installation directory, then Bash should look the default directories that have been assigned to the `PATH` variable prior to this new assignment.  By using a dollar sign (`$PATH`), the code says to add the value of the `PATH` variable (the list those default directories) here.  These default directories likely include:
+3. If Bash hasn't found a command in the Homebrew installation directory, then Bash should look the default directories that have been assigned to the `PATH` variable prior to this new assignment.  By using a dollar sign (`$PATH`), the code says to add the value of the current `PATH` variable here.  Let's assume the `PATH` is currently set to default directories that likely include:
 
 * `[user root directory]/usr/bin`
 * `[user root directory]/bin`
@@ -158,7 +156,7 @@ So this...
 * `[user root directory]/sbin`
 * `[user root directory]/usr/local/bin`
 
-So, in sum, once `.bash_profile` modifies the `PATH`, the directories that make up the `PATH` and that Bash will look to when executing commands are, in order:
+Once `.bash_profile` modifies the `PATH`, the directories that make up the `PATH` become, in order:
 
 * `[user root directory]/usr/local/bin`
 * `[user root directory]/usr/bin`
@@ -166,6 +164,8 @@ So, in sum, once `.bash_profile` modifies the `PATH`, the directories that make 
 * `[user root directory]/usr/sbin`
 * `[user root directory]/sbin`
 * `[user root directory]/usr/local/bin`
+
+And Bash will look to these directories when trying to execute applications from this point forward.  
 
 I hope all this helps make clearer what is going on under the hood the next time you might have to modify your Bash `PATH`, or perhaps even write a [Bash script](https://linuxconfig.org/bash-scripting-tutorial-for-beginners).  Thanks for reading!  
 
