@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Some Notes on Terminal, Bash, and Setting the `PATH`"
+title: "Terminal/Bash: Some Notes on the Nature of Terminal and Bash, as well as Setting the `PATH`"
 date:   2019-09-17 12:00:00 -0400
 categories: coding
 
