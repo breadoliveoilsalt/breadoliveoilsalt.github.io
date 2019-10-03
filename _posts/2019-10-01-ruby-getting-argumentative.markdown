@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Ruby: We're Getting Argumenative (Aka: Notes on Different Types of Ruby Arguments)"
+title: "Ruby: Getting Argumenative (Aka: Notes on Different Types of Ruby Arguments)"
 date:   2019-10-01 12:00:00 -0400
 categories: coding
 ---
@@ -225,7 +225,7 @@ So when you see a symbol passed to a method as an argument, it's not off base if
 ----------
 <p/>
 
-I hope the above serves as a quick crash course or refresher on different types of Ruby arguments.  Again, the method signature in the source code is what will really inform you about what you can pass into the method.  But to tie all of the above together, when you see something like this...
+I hope the discussion above serves as a quick crash course or refresher on different types of Ruby arguments.  Again, the method signature in the source code is what will really inform you about what you can pass into the method.  But to tie all of the above together, when you see something like this...
 
 ```ruby
 before_action :check_if_signed_in, only: [:edit, :update, :destroy]
@@ -233,11 +233,10 @@ before_action :check_if_signed_in, only: [:edit, :update, :destroy]
 
 ...you might be at least able to make certain assumptions, like:
 
-* `before_action` is a method that is being called; stylistically the developer is not wrapping the arguments in parentheses
+* `before_action` is a method that is being called; stylistically the developer is not wrapping the arguments in parentheses.
 
 * In the Rails context, a developer usually relies on `#before_action` to execute certain helper methods.  In this case, the helper method would be `#check_if_signed_in`.  But what might be happening under the hood of `#before_action` is that it is accepting a symbol argument that `#before_action` interpolates into a string. It might then use a metaprogramming method to ensure that the actual method `#check_if_signed_in` is executed when appropriate.  
 
-* `#before_action` accepts an additional argument after `:check_if_signed_in`; that is, the second argument `only: [:edit, :update, :destroy]`.  The `only:` tells us that this is a keyword argument.  Because the second argument is not needed in the Rails context, the method signature might provide that its placeholder variable is an optional argument with a default value provided, or it might be a variable argument.  
+* `#before_action` accepts an additional argument after `:check_if_signed_in`; that is, the second argument `only: [:edit, :update, :destroy]`.  The `only:` tells us that this is a keyword argument.  Because this second argument is not needed in the Rails context, the method signature might provide that its placeholder variable is an optional argument with a default value, or it might be a variable argument.  
 
-Of course, without examining the code base and the actual method signature for `#before_action`, we can't be sure about the assumptions above.  But at least , but at least we might hav
-is actually being passed to `#before_action` is a symbol that `before_action`gk f you pass `:check_if_signed_in` to `before_action`, may sound to method or something else you have created in your own code,  
+Of course, without examining the code base and the actual method signature for `#before_action`, we can't be sure about the assumptions above.  But hopefully understanding the different types of variables that a Ruby method can accept gives us a starting point for thinking about how `#before_action` works, what arguments we can pass to it, and how to pass the arguments to it.
