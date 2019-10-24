@@ -1,6 +1,85 @@
 ---
 layout: post
-title: "Ruby: Getting Argumenative (Aka: Notes on Different Types of Ruby Arguments)"
-date:   2019-10-01 12:00:00 -0400
+title: "Single Responsibility Principle"
+date:   2019-10-25 12:00:00 -0400
 categories: coding
 ---
+
+--------------------------------------------------------------------------
+<p />
+
+<p class="text-centered bold"> "Facts are stubborn things, but statistics are pliable.”
+― Mark Twain </p>
+
+--------------------------------------------------------------------------
+<p />
+
+I remember (not too long ago) when I first heard of the Single Responsibility Principle.  It's a great thing for someone young in their programming career like myself. It's a simple phrase to remember, meaning you've breezed through one-firth of the "SOLID" principles, and it sounds noble, making it easy to trust without having to know much about its ins and outs.  
+
+Unfortunately, I've become wary of the Single Responsibility Principle as I've read more, thought more, and make more mistakes about it.  I think this wariness begins from a difficulty pinning down exactly what the SRP means.  Take for example, the following quotes:
+
+--------------------------------------------------------------------------
+<p />
+
+<p class="text-centered bold"> "The Single Responsibility Principle states that a class or module should have one, and only one, reason to change."
+― Robert C. Martin, <span class="underlined">Clean Code</span></p>
+
+--------------------------------------------------------------------------
+<p />
+
+<p class="text-centered bold"> "A class should do the smallest possible useful thing; that is, it should have a single responsibility....SRP doesn't require that a class do only one very narrow thing or that it change for only a single nitpicky reason, instead SRP requires that a class be cohesivve--that everything the class does be highly related to its purpose."
+― Sandi Metz, <span class="underlined"> Practical Object-Oriented Design in Ruby</span>, Ed. 1</p>
+
+-------------------------------------------------------------------------
+<p />
+
+While not directly addressing the SRP, this other quote seems relevant to the matter as well:
+
+-------------------------------------------------------------------------
+<p />
+
+<p class="text-centered bold"> "When we modularize a program, we are trying to separate the code into zones to maximize the interaction inside a zone and minimize interaction between zones."
+― Martin Fowler & Kent Beck, <span class="underlined">Refactoring</span>, Ed. 2 (Chapter 4 on Code Smells) </p>
+
+-------------------------------------------------------------------------
+<p />
+
+I find it difficult to reconcile these three quotes when it comes to identifying how to determine whether a class has a single responsiblity.  This doesn't make me feel good as I try to snoop around my code for violations of the SRP.  And as I do this snooping, my wariness about the SRP grows thanks to a sense that defining a "responsiblity" seeems massagable, pliable, similar Mark Twain's observation about statistics.  For example, if my wife wants me to have the responsiblity for "daily cleaning of the litter box," to me that might sound like a single responsibility, so I'm happy.  But she might view me as accountable for "vaccuming up bits of litter on the floor" as part of this overarching responsibility, so from her perspective, I have two responibilities.  Is my life in violation of the SRP?  What if I delegate the sub-responsilbity of vacuuming to our child (successfully)?  Am I back in the good graces of the SRP?  Or have I just convinced myself of that?
+
+When working on Tic Tac Toe in Ruby recently, I similarly found myself merrily labeling classes as having a single responsiblity.  "Why, the Game class coordinates between the player classes and rules classes to exectue the game! One responsibility!"  But sequent feedback and suggestions pointed out otherwise: the class did too much, being responsible for (at various overlapping points) object instantiation, game looping, printing to the console, reading input.  These things should be broken out into separate classes that are, in turn, responsible for them.
+
+Once these points were made to me, they made sense.  I could see how making changes along these lines improved the code and made it more adaptable to any future changes.  But where exactly did I go wrong?  On one level, I'm not sure, because I find myself good at looking at a given class and talking my way into a single responsiblity for it.  A knack for spinning remaining from my lawyer days, it seems....
+
+But in any event, given the different definitions above for the SRP, and given the maliability of declaring a responsiblity itself, my hunch is that examining code for violations of the SRP is an approach similar to solving a Rubik's cube: you've got take what you're examining (i.e., a class) and look at it from different angles, asking yourself different questions as you go.  For example, these questions could be general ones, like these:
+
+- What is the likelihood that part of it could change for some reason?  Are there many such reasons it could change, including due to a dependencies or assumptions somewhere? If so, perhaps this class should be broken down into separate classes to isolate dependencies and/or isolate other areas from having to change. (Based on Robert Martin's quote above.)
+
+- Is everything in this class cohesive -- i.e., is it all related to to accomplishing a unified purpose?  If there are multiple unrelated "purposes" that you can discern, or if there is there a sub-purpose here that other classes may want to take advantage of, perhaps this class should be broken down into separate classes.  (Based on Sandi Metz's quote above.)
+
+- Is one particular class constantly sending messages to another particular class?  Perhaps there is a violation of the SRP because a responsiblity has been split among two classes when the responsibility should really only be with one unified class. (Based on Martin Fowler & Kent Beck's quote above.)  
+
+General questions like these may help, but I smell on the horizon that in practice, programmers tend to agree that certain specific tasks should be isolated within their own classes.  For example, based on the feedback I've received:
+
+- Does your program require input and output (which is highly likely)?  Let your program logic rely on abstractions of the input and output, while isolating the implementations of a particular input and output streams in separate classes responsible for that implementation.  This way, if your specific input or output streams change, your logic doesn't have to.  (In my mind, this is similar to the logic behind the "MVC" model.) 
+
+- Does your program require instantiating objects (again, which is highly likely)?  Let your program logic rely on abstractions of these objects.  Then have a class (or classes) with the responibility for instantiating these objects, and inject the objects into the class controlling your logic.  This way, you increase the likelihood that your program logic can manipulate other types of objects (perhaps through polymorphism), not just the objects you contemplate now.
+
+- Does your program rely on an API controlled by someone else?  A change in that underlying API could blow up your program if your logic makes direct calls to that API.  To minimize the risk of this, create a "wrapper" class that is responsible for speaking to the API on behalf of your program's logic.  Your logic can call methods defined in your wrapper class, and if the underlying API changes, your wrapper is the only thing that has to change to accomodate this development.  Your program logic doesn't have to.
+
+- Just as you can break a story down into a beginning, middle, and end, can you break your program logic down into different sections, and does it make sense to have different classes control particular sections?  By isolating sections this way, you minimize the chance that a change in one section will affect other sections. 
+
+
+
+certain specific tasks are generally accepted as But I think the questions can get more specific too, based on feedback I've received and even based on flipping through the Gang of Four's 
+
+
+
+sous like my wife to be responsible for "daily cleaning of the litter box", 
+
+
+
+
+More specifically, like [statistics](https://www.wired.co.uk/article/massage-statistics), a responsibility can be massaged.  I've felt quite proud of myself, for example, for creating a "Game" class with multhat had the single responsiblity of "coor    
+
+and thoought more about the Single Responsibility Principle
+'d argue that for anyone studying object oriented program, the Single Responsibility Principle holds a special place. 
