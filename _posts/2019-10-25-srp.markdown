@@ -60,17 +60,29 @@ But in any event, given the different definitions above for the SRP, and given t
 
 General questions like these may help, but I smell on the horizon that in practice, programmers tend to agree that certain specific tasks should be isolated within their own classes.  For example, based on the feedback I've received:
 
-- Does your program require input and output (which is highly likely)?  Let your program logic rely on abstractions of the input and output, while isolating the implementations of a particular input and output streams in separate classes responsible for that implementation.  This way, if your specific input or output streams change, your logic doesn't have to.  (In my mind, this is similar to the logic behind the "MVC" model.) 
-
 - Does your program require instantiating objects (again, which is highly likely)?  Let your program logic rely on abstractions of these objects.  Then have a class (or classes) with the responibility for instantiating these objects, and inject the objects into the class controlling your logic.  This way, you increase the likelihood that your program logic can manipulate other types of objects (perhaps through polymorphism), not just the objects you contemplate now.
+
+- Does your program require input and output (which is highly likely)?  Let your program logic rely on abstractions of the input and output, while isolating the implementations of a particular input and output streams in separate classes responsible for that implementation.  This way, if your specific input or output streams change, your logic doesn't have to.  (In my mind, this is similar to the logic behind the "MVC" model.) 
 
 - Does your program rely on an API controlled by someone else?  A change in that underlying API could blow up your program if your logic makes direct calls to that API.  To minimize the risk of this, create a "wrapper" class that is responsible for speaking to the API on behalf of your program's logic.  Your logic can call methods defined in your wrapper class, and if the underlying API changes, your wrapper is the only thing that has to change to accomodate this development.  Your program logic doesn't have to.
 
 - Just as you can break a story down into a beginning, middle, and end, can you break your program logic down into different sections, and does it make sense to have different classes control particular sections?  By isolating sections this way, you minimize the chance that a change in one section will affect other sections. 
 
+Even from a light flip though of the Gang of Four's <span class="underlined">Design Patterns</span>, one can surmise that professional programers tend to agree that, if the complexity is worth is, certain responsibilities should be sequestered to a separate part of your program.  These responsibilities include nuances to those above that I learned about: instantiation of objects ("Abstract Factory" and "Builder" patterns), translating between input and output or an external API ("Interpreter" pattern), separating chunks of logic from each other ("Strategy" and "Template Method" patterns), and many more.
 
+At the end of the day, my burdeoning and evolving sense of the SRP is telling me that it takes the shape of both generalized good advice to keep in mind and generally accepted practices that professionals recognize as valuable.  And the linch pin connecting these two manifestions and making them easier to understand is experience playing with and wrestling with them both.  That comes with time, which means that any wariness about the SRP will likely ease up as I learn more and grow more.
 
-certain specific tasks are generally accepted as But I think the questions can get more specific too, based on feedback I've received and even based on flipping through the Gang of Four's 
+Never one to miss an opportunity to lump everything together with a spin, though, I'd take a shot and say that if I had to summarize everything above, it's that the SRP wants us to ask: are there portions of code in your program that should be put together in their own class either becuase it logically makes sense to do so (i.e., these portions of the code depend on each other or are conceptually related) or because there is a likelihood that these portions of the code might change or be substitued, so you want to isolate them from the rest of your program? 
+
+Will this summary hold up? Time will tell!
+
+We'll see how 
+k
+the   generally accepted practices that professionals recognize as valuableesomewhere between a fluid concept of generalized good advice and a practical concept a slightly "jello-ish" concept: 
+
+- Should you be isolating some behavior or data in a separate class, either because they seem to belong together or because they might change and you want to isolate them from other parts of your program.  
+iWhat are the assumptions your code is making, including about its dependencies (what it relies on).  Is it reasonable to isolate those dependencies in a separate class    [] Can you isolate those dependencies in a separate class 
+certain specific tasks are generally accepted as But I think the questions can get more specific too, based on feedback I've received and even based on flipping through the Gang of Four's <span class="underlined">Design Patterns</span>, 
 
 
 
