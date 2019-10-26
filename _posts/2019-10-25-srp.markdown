@@ -75,23 +75,3 @@ At the end of the day, my burdeoning and evolving sense of the SRP is telling me
 Never one to miss an opportunity to lump everything together with a spin, though, I'd take a shot and say that if I had to summarize everything above, it's that the SRP wants us to ask: are there portions of code in your program that should be put together in their own class either becuase it logically makes sense to do so (i.e., these portions of the code depend on each other or are conceptually related) or because there is a likelihood that these portions of the code might change or be substitued, so you want to isolate them from the rest of your program? 
 
 Will this summary hold up? Time will tell!
-
-We'll see how 
-k
-the   generally accepted practices that professionals recognize as valuableesomewhere between a fluid concept of generalized good advice and a practical concept a slightly "jello-ish" concept: 
-
-- Should you be isolating some behavior or data in a separate class, either because they seem to belong together or because they might change and you want to isolate them from other parts of your program.  
-iWhat are the assumptions your code is making, including about its dependencies (what it relies on).  Is it reasonable to isolate those dependencies in a separate class    [] Can you isolate those dependencies in a separate class 
-certain specific tasks are generally accepted as But I think the questions can get more specific too, based on feedback I've received and even based on flipping through the Gang of Four's <span class="underlined">Design Patterns</span>, 
-
-
-
-sous like my wife to be responsible for "daily cleaning of the litter box", 
-
-
-
-
-More specifically, like [statistics](https://www.wired.co.uk/article/massage-statistics), a responsibility can be massaged.  I've felt quite proud of myself, for example, for creating a "Game" class with multhat had the single responsiblity of "coor    
-
-and thoought more about the Single Responsibility Principle
-'d argue that for anyone studying object oriented program, the Single Responsibility Principle holds a special place. 
