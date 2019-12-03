@@ -1,0 +1,33 @@
+---
+layout: postC
+title: "Java/Gradle/Travis CI: Getting Travis CI to Deploy a GitHub Release with a Git Commit SHA in the Filename"
+date:   2019-12-02 12:00:00 -0400
+categories: coding
+---
+
+I've been learning more about continuous integration practices, and when working on an [echo server in Java](https://github.com/breadoliveoilsalt/echo-server) recently, my mentors tasked me with configuring [Travis CI](https://travis-ci.com/) to build and deploy a Java jar file as a GitHub Release.  A key wrinkle: the file name for the jar file had to include the SHA of the Git commit for the snapshot used to build the jar file.  
+
+I hit some roadblocks in trying to get this all to work, so I thought I would share what I learned here.  Interestingly, a critical aspect of getting all this to work was configuring the build tool I was using locally, which in this case, was [Gradle](https://gradle.org/).
+
+--------------------------------------------------------------------------
+<p />
+
+Before we dive into the specific implementation, one of the key things I had to wrap my head around is what Travis does, and when.  As for what Travis does, long story short, Travis is a third party that performs a [build](https://docs.travis-ci.com/user/for-beginners/#ci-builds-and-automation-building-testing-deploying) of your app. But what does it mean to "build" an app? This took me a while to get my head around, but basically, with help from the ideas posted [here](https://stackoverflow.com/questions/1622506/programming-definitions-what-exactly-is-building), I've settled on the notion that "to do a build" means telling another program or app to do a series of tasks that the authors of the code want done with respect to their code.  That's all.  These tasks might include running tests, creating a compressed file that users can download and run (such as a Java jar file), deploying the code to a server so that web browsers can access it, issuing reports to certain stakeholders about what happened during the build, and/or simply letting certain people know that the build has occurred. "Doing the build" can thus encompass different tasks depending on the app and team behind it, and some of the tasks can be conditional.  For example, if the app's tests don't pass during the build, then the builder will likely be instructed not to deploy the code anywhere else for third-party users to access.
+
+So, at the end of the day, Travis is a third-party builder, an application that will run certain tasks with respect to your code.  Travis performs this build in the cloud on its own virtual machine.  But how does Travis know what is involved in the build, however, and when to do it?  
+
+The first thing Travis CI needs is your source code.  Travis CI gets this through integration with GitHub. That is, you can tell GitHub that you give Travis CI permission to access a repository (or repositories) that you push to GitHub. As of right now, I believe GitHub is the only online repository service with which Travis CI can integrate (see [here](https://docs.travis-ci.com/user/tutorial/#prerequisites)).
+
+The second thing Travis CI needs is instructions on how to perform its build.  Travis CI looks to two places for these instructions.  The first is a file named `.travis.yml` in your source code's root directory.  The second is the instructions for build tool that you use for this particular project on your local machine. How does Travis CI know where these local instructions are?  As things turn out, one of the most important things you tell Travis CI in the `.travis.yml` file is the programming language behind your app.  Absent instructions to the contrary, Travis CI will *make assumptions* about where to find your local build instructions based on the programming language.  For example, if your `.travis.yml` file [specifies that your app is written with Ruby](https://docs.travis-ci.com/user/languages/ruby/), like so...
+
+```
+language: ruby
+```
+
+...then Travis CI will assume you are using `rake` as your local build tool and will default to looking for build instructions in a `Rakefile` located in your GitHub repository's root directory.  Alternatively, if your `.travis.yml` file [specifies that your app is written in Java](https://docs.travis-ci.com/user/languages/java/), like so...
+
+```
+language: java
+```
+
+then Travis will assume you are using Gradle as your local build tool and will default to looking for build instructions in a `build.gradle` file in your repository's root directory.  (Gradle is not the only Java build tool that Travis CI supports, but if Travis CI finds a `build.gradle` file, that file will trump all other local build tools.  See [here](https://docs.travis-ci.com/user/languages/java/#maven-default-script-command), for example.)
