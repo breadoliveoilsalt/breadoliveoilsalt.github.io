@@ -1,18 +1,20 @@
 ---
-layout: postC
+layout: post
 title: "Java/Gradle/Travis CI: Getting Travis CI to Deploy a GitHub Release with a Git Commit SHA in the Filename"
 date:   2019-12-02 12:00:00 -0400
 categories: coding
 ---
 
-I've been learning more about continuous integration practices, and when working on an [echo server in Java](https://github.com/breadoliveoilsalt/echo-server) recently, my mentors tasked me with configuring [Travis CI](https://travis-ci.com/) to build and deploy a Java jar file as a GitHub Release.  A key wrinkle: the file name for the jar file had to include the SHA of the Git commit for the snapshot used to build the jar file.  
+I've been learning more about continuous integration practices, and when working on an [echo server in Java](https://github.com/breadoliveoilsalt/echo-server) recently, my mentors tasked me with configuring [Travis CI](https://travis-ci.com/) to build and deploy a Java jar file as a GitHub Release.  A key wrinkle: the filename for the jar file had to include the SHA of the Git commit for the snapshot used to build the jar file.  
 
 I hit some roadblocks in trying to get this all to work, so I thought I would share what I learned here.  Interestingly, a critical aspect of getting all this to work was configuring the build tool I was using locally, which in this case, was [Gradle](https://gradle.org/).
 
 --------------------------------------------------------------------------
 <p />
 
-Before we dive into the specific implementation, one of the key things I had to wrap my head around is what Travis does, and when.  As for what Travis does, long story short, Travis is a third party that performs a [build](https://docs.travis-ci.com/user/for-beginners/#ci-builds-and-automation-building-testing-deploying) of your app. But what does it mean to "build" an app? This took me a while to get my head around, but basically, with help from the ideas posted [here](https://stackoverflow.com/questions/1622506/programming-definitions-what-exactly-is-building), I've settled on the notion that "to do a build" means telling another program or app to do a series of tasks that the authors of the code want done with respect to their code.  That's all.  These tasks might include running tests, creating a compressed file that users can download and run (such as a Java jar file), deploying the code to a server so that web browsers can access it, issuing reports to certain stakeholders about what happened during the build, and/or simply letting certain people know that the build has occurred. "Doing the build" can thus encompass different tasks depending on the app and team behind it, and some of the tasks can be conditional.  For example, if the app's tests don't pass during the build, then the builder will likely be instructed not to deploy the code anywhere else for third-party users to access.
+Before we dive into the specific implementation, one of the key things I had to wrap my head around is what Travis does, how does it know what to do, and when does it do it?
+
+As for what Travis does, long story short, Travis is a third party that performs a [build](https://docs.travis-ci.com/user/for-beginners/#ci-builds-and-automation-building-testing-deploying) of your app. But what does it mean to "build" an app? This took me a while to get my head around, but basically, with help from the ideas posted [here](https://stackoverflow.com/questions/1622506/programming-definitions-what-exactly-is-building), I've settled on the notion that "to do a build" means telling another program or app to do a series of tasks that the authors of the code want done with respect to their code.  That's all.  These tasks might include running tests, creating a compressed file that users can download and run (such as a Java jar file), deploying the code to a server so that web browsers can access it, issuing reports to certain stakeholders about what happened during the build, and/or simply letting certain people know that the build has occurred. "Doing the build" can thus encompass different tasks depending on the app and team behind it, and some of the tasks can be conditional.  For example, if the app's tests don't pass during the build, then the builder will likely be instructed not to deploy the code anywhere else for third-party users to access.
 
 So, at the end of the day, Travis is a third-party builder, an application that will run certain tasks with respect to your code.  Travis performs this build in the cloud on its own virtual machine.  But how does Travis know what is involved in the build, however, and when to do it?  
 
@@ -30,4 +32,178 @@ language: ruby
 language: java
 ```
 
-then Travis will assume you are using Gradle as your local build tool and will default to looking for build instructions in a `build.gradle` file in your repository's root directory.  (Gradle is not the only Java build tool that Travis CI supports, but if Travis CI finds a `build.gradle` file, that file will trump all other local build tools.  See [here](https://docs.travis-ci.com/user/languages/java/#maven-default-script-command), for example.)
+...then Travis will assume you are using Gradle as your local build tool and will default to looking for build instructions in a `build.gradle` file in your repository's root directory.  (Gradle is not the only Java build tool that Travis CI supports, but if Travis CI finds a `build.gradle` file, that file will trump all other local build tools.  See [here](https://docs.travis-ci.com/user/languages/java/#maven-default-script-command), for example.)
+
+So Travis will perform a build of your project, following instructions from the `.travis.yml` file and the instructions for your local build tool.  From now on, we'll assume that local build tool is Gradle, meaning Travis looks to instructions in the `build.gradle` file of your project's root directory.  The last piece of the puzzle is, when does Travis perform a build?  The answer depends, in part, on the instructions given in the `.travis.yml` file.  But, in general, because Travis is so integrated with GitHub, builds generally occur around events that happen with respect to GitHub, particularly pushing a branch or making a pull request.  Travis also takes note of, and distinguishes, pushing a git tag to GitHub (that is, rather than pushing that name of a branch, pushing the name of a [tag](https://git-scm.com/book/en/v2/Git-Basics-Tagging) with `git push origin <whateverYourTagNameIs>`.  Pushing a tag can play a particularly important role in getting Travis CI to post a file as a GitHub Release, as we'll see later.
+
+--------------------------------------------------------------------------
+<p />
+
+With that background knowledge in mind, let's get to the task at hand: getting Travis CI to deploy a Java jar file as a GitHub Release, with the jar file containing the SHA of the Git commit from which the jar file was built.  This all assumes:
+
+- the repository in question is already integrated with Travis CI as described [here](https://docs.travis-ci.com/user/tutorial/#to-get-started-with-travis-ci),
+- you have some basic knowledge of Gradle, and
+- every time you see a terminal command that starts with `gradle`, such as `gradle build`, you understand that the best practice is to instead run the command with the gradle wrapper script, like so: `./gradlew build`.
+
+We'll start with the instructions we give to our local build tool, Gradle, in the `gradle.build` file.  Comments attempt to explain what the relevant parts do, but you can find an un-commented versions of the code that follows [here](https://github.com/breadoliveoilsalt/java-test).
+
+```java
+// gradle.build
+
+plugins {
+    id 'java'
+    id 'application'
+      // Long story short, the 'java' and 'application' plugins above make certain
+      // gradle tasks available, and cause certain tasks to be run by default
+      // whenever you run `gradle build`.  This is important because Travis CI
+      // basically gives the `gradle build` command when it builds the program
+      // on its own virtual machine.  Importantly, the 'java' plugin adds a
+      // 'jar' task to your build, creating a Java jar file every time you or
+      // Travis CI runs `gradle build`. Manipulating that jar's filename is
+      // the subject of the comments below.
+    id 'com.palantir.git-version' version '0.12.2'
+      // The plug in above allows gradle.build to access the SHA of your Git commit.
+      // See 'jar' in the code below.
+}
+
+mainClassName = 'App'
+  // Don't forget to specify a `mainClassName` like above, or the `application`
+  // plugin will not be happy.
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+distZip.enabled = false
+distTar.enabled = false
+  // An aside: the 'application' plug in automatically builds zip and tar files
+  // for you when you run `gradle build`.  It took me a while to figure out how
+  // to disable this.  The two lines above is how you can disable.  
+
+  // Below is the meat and potatoes of how to manipulate the jar's filename.  
+  // Remember, because of the `java` plugin, the jar file is automatically
+  // being built whenever `gradle build` is run, which is what Travis CI does
+  // on its virtual machine.
+jar {
+      // Below sets the base of your jar's filename.
+    archiveBaseName = "testJava"
+      // Below uses methods provided by the palantir plugin to append to the
+      // jar filename (a) the last git tag you have added and (b) the
+      // Git commit SHA (aka hash).
+    archiveVersion = versionDetails().lastTag + "-" + versionDetails().gitHash
+      // Below is necessary metadata to assist Java in creating the jar file.
+      // It essentially tells Java where the `main()` method is to kick off the
+      // program.  Gradle is still leaning on Java to create the jar file
+      // under the hood, and I learned the hard way that omitting this data
+      // causes the jar file to be worthless.
+    manifest {
+        attributes(
+                'Main-Class': 'App'
+        )
+    }
+}
+
+
+```
+
+(There are some footnotes to the above comments [here - ADD LINK]().)
+
+We can see from the comments above that Gradle is responsible for creating a jar file with the Git commit SHA.  So how does Travis CI know to grab the jar file and deploy it to GitHub Releases?  This is where
+the instructions in the `.travis.yml` file come into play.  Before we take a look at our `.travis.yml` file, there are a few things worth noting:
+
+- Travis CI's documentaion on how to deploy to GitHub Releases is helpful and can be found [here](https://docs.travis-ci.com/user/deployment/releases/).
+- Even though Travis CI's builds are queued to GitHub events (like pull requests and pushes), it can deploy to many other platforms besides GitHub.  The fact that this deploys to GitHub is just one of the unique circumstances here.
+- Travis CI provides a command line tool to help create your `.travis.yml` for deployment.  To use it, you need the [Travis Client Gem](https://github.com/travis-ci/travis.rb#readme).  This allows you to run the following command, `travis setup releases --com`, which, importantly, encrypts your GitHub oath credentials.  After running this command, your `.travis.yml` file will have an `aoi_key:/secure:` field with a complex hash that allows Travis CI to deploy something as a GitHub Release. As your `travis.yml` file will be posted on GitHub, perhaps publicly, it's best to let this Travis Client Gem handle the security work.  
+
+Let's take a look at our `.travis.yml` file that deploys the jar file to GitHub, with comments similar to above.  This file is the result of running `travis setup releases --com` at the command line and then modifying it.  
+
+```yml
+# .travis.yml
+
+language: java
+   # Thanks to the language designation above, Travis CI will look to a
+   # `gradle.build` file for instructions on how Travis CI should perform
+   # the build on its virtual machine, absent other instructions to the
+   # contrary.
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+  # The lines above about caching help Travis CI's build go faster, according
+  # to the Travis CI documentation.
+
+  # Here is the meat an potatoes for deploying to GitHub Releases:
+deploy:
+  provider: releases
+    # The line above tells Travis CI to deploy something as a GitHub releases
+  skip_cleanup: true
+    # The line above is set to `false` by the Travis CLI tool, but the Travis CI
+    # documentation for GitHub Releases advises that this value should be true.
+  api_key:
+    secure: <a long crazy code here>
+      # The line above represents your encrypted GitHub OAuth key created
+      # by the Travis CLI tool.
+  file_glob: true
+    # The line above is necessary so that Travis CI knows to grab all the files
+    # in a certain directory following its build.  This makes the next line
+    # possible.
+  file: build/libs/*
+    # Travis CI wants to know which file you'd like to deploy.  Gradle builds
+    # the jar file in a `build/lib` sub-folder that it creates.  Our file
+    # name is dynamic, however, constantly changing because it includes
+    # the SHA of a particular Git commit, which will change with new builds.
+    # As a result, trusting that nothing else will be in this file thanks to
+    # my `gradle.build` file, I tell Travis CI to deploy whatever is in this
+    # folder as part of the build.
+  on:
+    repo: <your-GitHub-username>/<your-repository>
+    all_branches: true
+    tags: true
+      # The stuff above is basically tells Travis CI to deploy the
+      # jar file when I push or make a pull request to the repo above from any
+      # branch.  This maximum flexibility was fine for my particular project.  
+      # The Travis CI documentation has instructions on how to limit this.
+
+      # The most important field above is `tags: true`.  This keeps Travis CI
+      # from deploying a GitHub Release every single time I push something to
+      # GitHub for this repo or make a pull request for this repo.  It tells
+      # Travis instead to only deploy a Release when I have tagged a commit
+      # and pushed the tag.
+        # What does it mean to tag a commit and push the tag?
+        # This took me an embarrassingly long time to get right, but what This
+        # basically means is when you want Travis to deploy a release from a
+        # certain commit, first tag the commit with the Git tag command, like
+        # so...
+          # `git tag v1.0`
+        # ...and then push that specific tag to GitHub, like so...
+          # `git push origin v1.0`
+      # With these settings in place, Travis CI will still perform a build
+      # every time you push something to GitHub or make a pull request, but
+      # it will only complete the deployment task when you push a tag, similar
+      # the commands immediately above.
+
+```
+I've found the `gradle.build` and `.travis.yml` files above helpful for accomplishing the task at hand.  
+Hopefully all this is of assistance if you are facing a similar task, particularly getting a Git commit SHA to appear in a file name.  Thanks for stopping by!
+
+--------------------------------------------------------------------------
+<p />
+
+Footnotes:
+
+- To learn more about the Gradle 'java' plugin, see [here] (https://docs.gradle.org/current/userguide/java_plugin.html)
+
+- To see what gradle tasks are avaiable, and which specifc tasks are run during a Gradle build, run `gradle task` at the command line and take a look.
+
+- [This discussion](https://stackoverflow.com/questions/47192746/how-can-i-disable-a-task-in-build-gradle) is what tipped me off on how to disable tasks that run by default from the `gradle build` command.
