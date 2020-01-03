@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "A Cool Thing I Learned from `Working Effectively with Legacy Code`"
+title: "A Cool Thing I Learned from Michael Feathers' Book `Working Effectively with Legacy Code`"
 date:   2020-01-03 12:00:00 -0400
 categories: coding
 ---
