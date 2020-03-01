@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Java: Towards a Rails-Like Router in a Home Grown Java HTTP Server"
-date:   2020-02-23 12:00:00 -0400
+date:   2020-03-01 12:00:00 -0400
 categories: coding
 ---
 
